@@ -1,0 +1,10 @@
+{
+  "extends": [
+    "airbnb-base",
+    "prettier"
+  ],
+  "rules": {
+    "import/no-dynamic-require": "off",
+    "no-param-reassign": "off"
+  }
+}
