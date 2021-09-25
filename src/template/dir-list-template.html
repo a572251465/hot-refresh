@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <title>展示目录列表</title>
+  <style>
+      .b-icon {
+          font-size: 6px;
+      }
+      .b-icon_type_folder {
+          display: inline-block;
+          background-color: transparent;
+          overflow: hidden;
+          margin: 0.9em 1.2em 0.8em 1.3em;
+      }
+      .b-icon_type_folder:before {
+          content: '';
+          float: left;
+          background-color: #7ba1ad;
+          width: 1.5em;
+          height: 0.45em;
+          margin-left: 0.07em;
+          margin-bottom: -0.07em;
+          border-top-left-radius: 0.1em;
+          border-top-right-radius: 0.1em;
+          box-shadow: 1.25em 0.25em 0 0em #7ba1ad;
+      }
+      .b-icon_type_folder:after {
+          content: '';
+          float: left;
+          clear: left;
+          background-color: #a0d4e4;
+          width: 3em;
+          height: 2.25em;
+          border-radius: 0.1em;
+      }
+      .b-icon_type_folder.b-icon_full:before {
+          height: 0.55em;
+      }
+      .b-icon_type_folder.b-icon_full:after {
+          height: 2.15em;
+          box-shadow: 0 -0.12em 0 0 #fff;
+      }
+      .b-icon_type_file {
+          width: 2.5em;
+          height: 3em;
+          line-height: 3em;
+          text-align: center;
+          border-radius: 0.25em;
+          color: #fff;
+          display: inline-block;
+          margin: 0.9em 1.2em 0.8em 1.3em;
+          position: relative;
+          overflow: hidden;
+          box-shadow: 1.74em -2.1em 0 0 #a4a7ac inset;
+      }
+      .b-icon_type_file:first-line {
+          font-size: 13px;
+          font-weight: 700;
+      }
+      .b-icon_type_file:after {
+          content: '';
+          position: absolute;
+          z-index: -1;
+          border-width: 0;
+          border-bottom: 2.6em solid #dadde1;
+          border-right: 2.22em solid rgba(0, 0, 0, 0);
+          top: -5.5px;
+          right: -4px;
+      }
+      .b-icon_ext_avi {
+          box-shadow: 1.74em -2.1em 0 0 #7e70ee inset;
+      }
+      .b-icon_ext_avi:after {
+          border-bottom-color: #5649c1;
+      }
+
+      li {
+          display: flex;
+          padding-left: 2rem;
+          align-items: center;
+      }
+
+      li:nth-child(2n + 1) {
+          background: #eeeeee;
+          box-shadow: 2px 2px #ccc;
+      }
+
+      h2 {
+          text-align: center;
+      }
+
+      ul {
+          padding: 0;
+          width: 70%;
+          margin: 0 auto;
+      }
+      .size {
+          font-size: 12px;
+          display: inline-block;
+          width: 50px;
+          text-align: center;
+      }
+  </style>
+</head>
+<body>
+  <h2>展示目录列表</h2>
+  <ul>
+    <%dirs.forEach(dir=>{%>
+      <li>
+        <% if (dir.type == '2') { %>
+        <p class="b-icon b-icon_type_folder"></p>
+        <% } else { %>
+        <p class="b-icon b-icon_type_file b-icon_ext_avi"></p>
+        <% } %>
+        <span>（<%=dir.power%>）</span>
+        <span class='size'>
+          <% if (dir.size != '0B') { %>
+            <%=dir.size%>
+          <% } %>
+        </span>
+        <a href="<%=dir.url%>"><%=dir.filename%></a>
+      </li>
+    <%})%>
+  </ul>
+</body>
+</html>

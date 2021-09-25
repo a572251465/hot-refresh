@@ -9,10 +9,12 @@ const white = (con) => chalk.white(con)
 const yellow = (con) => chalk.yellowBright(con)
 const cyan = (con) => chalk.cyan(con)
 const green = (con) => chalk.green(con)
+const red = (con) => chalk.red(con)
 
 module.exports = {
   white,
   yellow,
   cyan,
-  green
+  green,
+  red
 }
