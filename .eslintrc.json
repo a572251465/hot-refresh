@@ -5,6 +5,7 @@
   ],
   "rules": {
     "import/no-dynamic-require": "off",
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "no-console": "off"
   }
 }

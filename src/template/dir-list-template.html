@@ -101,6 +101,11 @@
           width: 50px;
           text-align: center;
       }
+      .power {
+          width: 130px;
+          text-align: left;
+          display: inline-block;
+      }
   </style>
 </head>
 <body>
@@ -113,7 +118,7 @@
         <% } else { %>
         <p class="b-icon b-icon_type_file b-icon_ext_avi"></p>
         <% } %>
-        <span>（<%=dir.power%>）</span>
+        <span class='power'>（<%=dir.power%>）</span>
         <span class='size'>
           <% if (dir.size != '0B') { %>
             <%=dir.size%>

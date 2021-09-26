@@ -2,9 +2,13 @@ const path = require('path')
 const ejs = require('ejs')
 const url = require('url')
 const { createReadStream } = require('fs')
+const { getType } = require('mime')
 const fs = require('fs')
 const fsUtil = require('../shared/fs')
 const colors = require('../shared/colors')
+const getPower = require('../shared/power')
+const cached = require('./cached')
+const { singleCase } = require('../shared/singleCase')
 
 const dirListTemplatePath = path.resolve(
   __dirname,
@@ -17,21 +21,19 @@ const dirListTemplate = fs.readFileSync(dirListTemplatePath, 'utf-8')
  * @description 进行路由控制
  */
 
-// eslint-disable-next-line no-shadow
 const generatorDirPage = async (dir, pathname) => {
-  // eslint-disable-next-line no-shadow
-  const url = path.join(dir, pathname)
-  const dirs = fs.readdirSync(url)
+  const dirs = fs.readdirSync(dir)
   const resDirs = dirs.map((filename) => {
-    const filePath = path.join(url, filename)
+    const filePath = path.join(dir, filename)
     const stats = fs.statSync(filePath)
     const { size } = stats
     const type = stats.isFile() ? '1' : '2'
+    const reqUrl = encodeURIComponent(path.join(pathname, filename))
     return {
       filename,
       size: size < 1000 ? `${size}B` : `${(size / 1000).toFixed(1)}K`,
-      power: '-rw-rw-rw-',
-      url: path.join(pathname, filename),
+      power: getPower(stats.mode, stats.isDirectory()),
+      url: reqUrl,
       type
     }
   })
@@ -41,35 +43,59 @@ const generatorDirPage = async (dir, pathname) => {
   return fileContent
 }
 
+const settingHeaderHandle = (filePath, res) => {
+  const type = getType(filePath)
+  res.setHeader('Content-Type', `${type}; charset=utf-8`)
+}
+
+const isFileOrFolder = async (dir, res, req, filename) => {
+  const newDir = path.join(dir, filename)
+  let { pathname } = url.parse(req.url)
+  pathname = decodeURIComponent(pathname)
+
+  if (fsUtil.isFileExists(newDir)) {
+    settingHeaderHandle(newDir, res)
+    const stats = fs.statSync(newDir)
+
+    if (singleCase.preset.cache && cached(res, req, stats)) {
+      res.statusCode = 304
+      return res.end()
+    }
+    return createReadStream(newDir).pipe(res)
+  }
+  const result = await generatorDirPage(dir, pathname)
+  return res.end(result)
+}
+
+// eslint-disable-next-line consistent-return
 const pageNextHandle = async (req, res, dir) => {
-  const { pathname } = url.parse(req.url)
+  let { pathname } = url.parse(req.url)
+  pathname = decodeURIComponent(pathname)
   try {
     if (pathname === '/') {
-      const absPath = path.join(dir, 'index.html')
-      if (fsUtil.isFileExists(absPath)) {
-        createReadStream(absPath).pipe(res)
-      } else {
-        const result = await generatorDirPage(dir, pathname)
-        res.end(result)
-      }
+      await isFileOrFolder(dir, res, req, 'index.html')
     } else {
       const absPath = path.join(dir, pathname)
       const stats = fs.statSync(absPath)
+
       if (stats.isFile()) {
-        createReadStream(absPath).pipe(res)
+        await isFileOrFolder(dir, res, req, pathname)
       } else {
-        const result = await generatorDirPage(dir, pathname)
-        res.end(result)
+        await isFileOrFolder(absPath, res, req, 'index.html')
       }
     }
   } catch (e) {
-    console.log(colors.red(`${pathname} is not found`))
+    const { log } = singleCase.preset
+    if (log) {
+      console.log(e)
+    }
+    console.log(colors.yellow(`${pathname} is not found`))
     res.end('not found')
   }
 }
 
-const route = (options) => (req, res) => {
-  const { dir } = options
+const route = () => (req, res) => {
+  const { dir } = singleCase.preset
   pageNextHandle(req, res, dir)
 }
 

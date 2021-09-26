@@ -2,16 +2,19 @@ const http = require('http')
 const getIpInfo = require('./ip')
 const colors = require('./colors')
 const routeController = require('../core/route')
+const { setPresetOptions } = require('./singleCase')
 
 class Server {
   constructor(options) {
-    const { port, dir } = options
+    const { port, dir, statics } = options
     this.port = port
     this.dir = dir
+    this.statics = statics
+    setPresetOptions(options)
   }
 
   start() {
-    const route = routeController({ port: this.port, dir: this.dir })
+    const route = routeController()
     const server = http.createServer((req, res) => route(req, res))
     server.listen(this.port, () => {
       console.log(
@@ -25,7 +28,9 @@ class Server {
           `${colors.white(`http://${ip}:`)}${colors.green(this.port)}`
         )
       })
-      console.log(colors.cyan('File change watch ...'))
+      if (this.statics) {
+        console.log(colors.cyan('File change watch ...'))
+      }
       console.log(colors.white('Hit CTRL-C to stop the server'))
     })
 

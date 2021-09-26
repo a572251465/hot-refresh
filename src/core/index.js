@@ -20,7 +20,10 @@ const commanderHandle = () => {
   program.version(getVersionInfo('version'))
   defaultPresetConfig.forEach((item) => {
     const { alias, allName, field, desc } = item
-    program.option(`${alias}, ${allName} <${field}>`, desc)
+    program.option(
+      `${alias}, ${allName}${item.isBoolean ? '' : ` <${field}>`}`,
+      desc
+    )
   })
   program.parse(process.argv)
   const autoOptions = program.opts()

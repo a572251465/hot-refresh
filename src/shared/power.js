@@ -1,18 +1,23 @@
 /**
  * @author lihh
- * @description 获取权限
- * @param val 权限数值
+ * @description 设置互殴去
  */
-const powerJson = {
-  0: '-',
-  1: 'x',
-  2: 'w',
-  3: 'wx',
-  4: 'r',
-  6: 'rw',
-  7: 'rwx'
+
+module.exports = function permsToString(mode, isDir) {
+  const dir = isDir ? 'd' : '-'
+  mode = mode.toString(8)
+
+  return (
+    dir +
+    mode
+      .slice(-3)
+      .split('')
+      .map(
+        (n) =>
+          ['---', '--x', '-w-', '-wx', 'r--', 'r-x', 'rw-', 'rwx'][
+            parseInt(n, 10)
+          ]
+      )
+      .join('')
+  )
 }
-
-const getPower = (val) => {}
-
-module.exports = getPower
