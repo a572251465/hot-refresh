@@ -28,7 +28,7 @@ class Server {
           `${colors.white(`http://${ip}:`)}${colors.green(this.port)}`
         )
       })
-      if (this.statics) {
+      if (!this.statics) {
         console.log(colors.cyan('File change watch ...'))
       }
       console.log(colors.white('Hit CTRL-C to stop the server'))

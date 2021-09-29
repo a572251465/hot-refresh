@@ -6,6 +6,8 @@
   "rules": {
     "import/no-dynamic-require": "off",
     "no-param-reassign": "off",
-    "no-console": "off"
+    "no-console": "off",
+    "no-cond-assign": "off",
+    "no-useless-escape": "off"
   }
 }

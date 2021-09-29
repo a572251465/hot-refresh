@@ -1,0 +1,8 @@
+{
+  "editor.formatOnSave": true,
+  "editor.fontWeight": "bold",
+  "editor.letterSpacing": 0.5,
+  "editor.fontSize": 13,
+  "editor.fontFamily": "Verdana",
+  "editor.tabSize": 2,
+}
