@@ -3,6 +3,7 @@ const getIpInfo = require('./ip')
 const colors = require('./colors')
 const routeController = require('../core/route')
 const { setPresetOptions } = require('./singleCase')
+const generatorClientSocket = require('./generatorClientSocket')
 
 class Server {
   constructor(options) {
@@ -30,6 +31,7 @@ class Server {
       })
       if (!this.statics) {
         console.log(colors.cyan('File change watch ...'))
+        generatorClientSocket()
       }
       console.log(colors.white('Hit CTRL-C to stop the server'))
     })

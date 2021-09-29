@@ -9,9 +9,10 @@ const extractRegExp = /(<link.+?>)|(<script.+?>)/gi
  * @description 抽离监听的文件
  * @param {*} url 待抽离的文件地址
  */
-const extractWatchFile = (currentDir, filePath) => {
+const extractWatchFile = (filePath) => {
   // 判断是否是htm后缀
   if (!filePath.endsWith('html')) return false
+  const currentDir = path.dirname(filePath)
 
   const fileContent = fs.readFileSync(filePath)
   const matchResult = []
@@ -41,6 +42,7 @@ const extractWatchFile = (currentDir, filePath) => {
     .map((item) => path.resolve(currentDir, item))
     .concat(filePath)
   editWatchFile(filePath, allFiles)
+  console.log(allFiles)
   return true
 }
 
