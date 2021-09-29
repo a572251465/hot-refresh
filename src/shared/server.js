@@ -2,6 +2,7 @@ const http = require('http')
 const getIpInfo = require('./ip')
 const colors = require('./colors')
 const routeController = require('../core/route')
+const processWatch = require('./processWatch')
 const { setPresetOptions } = require('./singleCase')
 const generatorClientSocket = require('./generatorClientSocket')
 
@@ -34,6 +35,7 @@ class Server {
         generatorClientSocket()
       }
       console.log(colors.white('Hit CTRL-C to stop the server'))
+      processWatch()
     })
 
     server.on('error', (err) => {

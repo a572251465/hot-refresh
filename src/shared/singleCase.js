@@ -1,6 +1,7 @@
 const singleCase = {
   preset: {},
-  watchFile: {}
+  watchFile: {},
+  allSocketNames: []
 }
 
 const setPresetOptions = (options) => {
@@ -23,8 +24,22 @@ const editWatchFile = (key, value) => {
   return true
 }
 
+/**
+ * @author lihh
+ * @description 设置socket文件 方便以后清除
+ * @param {*} name
+ */
+const setSocketName = (name) => {
+  const { allSocketNames } = singleCase
+  if (allSocketNames.includes(name)) return false
+
+  allSocketNames.push(name)
+  return true
+}
+
 module.exports = {
   singleCase,
   setPresetOptions,
-  editWatchFile
+  editWatchFile,
+  setSocketName
 }
