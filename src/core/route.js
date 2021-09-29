@@ -10,6 +10,7 @@ const getPower = require('../shared/power')
 const cached = require('./cached')
 const { singleCase } = require('../shared/singleCase')
 const extractWatchFile = require('../shared/extractWatchFile')
+const clientHtmlWriteSocket = require('../shared/clientHtmlWriteSocket')
 
 const dirListTemplatePath = path.resolve(
   __dirname,
@@ -53,6 +54,7 @@ const generatorDirPage = async (dir, pathname) => {
  * @param {*} res 相应res
  */
 const settingHeaderHandle = (filePath, res) => {
+  clientHtmlWriteSocket(filePath)
   extractWatchFile(filePath)
   const type = getType(filePath)
   res.setHeader('Content-Type', `${type}; charset=utf-8`)

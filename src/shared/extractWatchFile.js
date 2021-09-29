@@ -42,7 +42,6 @@ const extractWatchFile = (filePath) => {
     .map((item) => path.resolve(currentDir, item))
     .concat(filePath)
   editWatchFile(filePath, allFiles)
-  console.log(allFiles)
   return true
 }
 
