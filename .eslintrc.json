@@ -9,6 +9,7 @@
     "no-console": "off",
     "no-cond-assign": "off",
     "no-useless-escape": "off",
-    "no-bitwise": "off"
+    "no-bitwise": "off",
+    "global-require": "off"
   }
 }

@@ -5,4 +5,11 @@
   "editor.fontSize": 12,
   "editor.fontFamily": "Verdana",
   "editor.tabSize": 2,
+  "prettier.printWidth": 120,
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "none",
+  "prettier.jsxBracketSameLine": true,
+  "terminal.integrated.cursorStyle": "underline",
+  "editor.cursorStyle": "underline",
 }

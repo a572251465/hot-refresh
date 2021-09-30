@@ -15,6 +15,22 @@ const clearSingleInfo = () => {
 
 /**
  * @author lihh
+ * @description 退出清除文件缓存
+ */
+const clearWatcher = () => {
+  const { watchInstance } = singleCase
+  watchInstance.forEach((item) => {
+    const { files, instance } = item
+    files.forEach(async (filename) => {
+      await instance.unwatch(filename)
+    })
+  })
+
+  singleCase.watchInstance = []
+}
+
+/**
+ * @author lihh
  * @description 清除html中socket文件
  */
 const clearHtmlSocketInfo = () => {
@@ -38,8 +54,13 @@ const clearHtmlSocketInfo = () => {
  * @description 退出时清除缓存
  */
 const exitClearCache = () => {
+  const { statics } = singleCase.preset
+  if (statics) return false
+
+  clearWatcher()
   clearHtmlSocketInfo()
   clearSingleInfo()
+  return true
 }
 
 module.exports = exitClearCache

@@ -54,8 +54,11 @@ const generatorDirPage = async (dir, pathname) => {
  * @param {*} res 相应res
  */
 const settingHeaderHandle = (filePath, res) => {
-  clientHtmlWriteSocket(filePath)
-  extractWatchFile(filePath)
+  const { statics } = singleCase.preset
+  if (!statics) {
+    clientHtmlWriteSocket(filePath)
+    extractWatchFile(filePath)
+  }
   const type = getType(filePath)
   res.setHeader('Content-Type', `${type}; charset=utf-8`)
 }

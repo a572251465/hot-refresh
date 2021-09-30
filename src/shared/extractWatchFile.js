@@ -1,6 +1,6 @@
 const fs = require('fs')
 const path = require('path')
-const { editWatchFile } = require('./singleCase')
+const editWatchFile = require('./editWatchFile')
 
 const extractRegExp = /(<link.+?>)|(<script.+?>)/gi
 
