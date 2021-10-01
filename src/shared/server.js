@@ -1,18 +1,20 @@
 const http = require('http')
+const path = require('path')
 const getIpInfo = require('./ip')
 const colors = require('./colors')
 const routeController = require('../core/route')
 const processWatch = require('./processWatch')
-const { setPresetOptions } = require('./singleCase')
+const { setPresetOptions, singleCase } = require('./singleCase')
 const generatorClientSocket = require('./generatorClientSocket')
-const serverSocket = require('./serverSocket')
+const ServerSocket = require('./serverSocket')
 
 class Server {
   constructor(options) {
-    const { port, dir, statics } = options
+    const { port, dir, statics, logWrite } = options
     this.port = port
     this.dir = dir
     this.statics = statics
+    this.logWrite = logWrite
     setPresetOptions(options)
   }
 
@@ -20,6 +22,11 @@ class Server {
     const route = routeController()
     const server = http.createServer((req, res) => route(req, res))
     server.listen(this.port, () => {
+      console.log(
+        colors.green(
+          `hot-refresh 开源不易，请拿起你们的小手，点击star吧 <https://github.com/a572251465/hot-refresh>`
+        )
+      )
       console.log(
         colors.yellow(
           `Service started successfully, the address is: ${this.dir}`
@@ -36,7 +43,13 @@ class Server {
         generatorClientSocket()
 
         // 开启webSocket
-        serverSocket(server)
+        singleCase.server = new ServerSocket(server)
+      }
+
+      // 判断是否将log写入文件中
+      if (this.logWrite) {
+        const logName = path.join(this.dir, `${+new Date()}_log.txt`)
+        singleCase.logName = logName
       }
       console.log(colors.white('Hit CTRL-C to stop the server'))
       processWatch()

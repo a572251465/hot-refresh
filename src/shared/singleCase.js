@@ -2,7 +2,9 @@ const singleCase = {
   preset: {},
   watchFile: {},
   allSocketNames: [],
-  watchInstance: []
+  watchInstance: [],
+  server: null,
+  logName: ''
 }
 
 const setPresetOptions = (options) => {

@@ -1,6 +1,20 @@
 const fs = require('fs')
 const path = require('path')
+const fsUtil = require('./fs')
 const { singleCase } = require('./singleCase')
+
+/**
+ * @author lihh
+ * @description 删除写入的log
+ */
+const clearWriteLog = () => {
+  const { logName } = singleCase
+  if (!fsUtil.isFileExists(logName)) return false
+
+  fs.unlinkSync(logName)
+  singleCase.logName = ''
+  return true
+}
 
 /**
  * @author lihh
@@ -45,8 +59,11 @@ const clearHtmlSocketInfo = () => {
     })
   })
 
-  // 删除js文件
-  fs.unlinkSync(path.join(preset.dir, 'hot-refresh-socket.js'))
+  const filepath = path.join(preset.dir, 'hot-refresh-socket.js')
+  if (fsUtil.isFileExists(filepath)) {
+    // 删除js文件
+    fs.unlinkSync(filepath)
+  }
 }
 
 /**
@@ -57,6 +74,7 @@ const exitClearCache = () => {
   const { statics } = singleCase.preset
   if (statics) return false
 
+  clearWriteLog()
   clearWatcher()
   clearHtmlSocketInfo()
   clearSingleInfo()

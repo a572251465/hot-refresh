@@ -22,20 +22,20 @@ const defaultPresetConfig = [
     desc: 'Service startup directory'
   },
   {
-    alias: '-t',
-    allName: '--time',
-    field: 'time',
-    isBoolean: false,
-    defaultValue: 0,
-    desc: 'Save file refresh page jitter time'
-  },
-  {
     alias: '-l',
     allName: '--log',
     field: 'log',
     isBoolean: true,
     defaultValue: false,
     desc: 'Print error log'
+  },
+  {
+    alias: '-lw',
+    allName: '--logWrite',
+    field: 'logWrite',
+    isBoolean: true,
+    defaultValue: false,
+    desc: 'log write file'
   },
   {
     alias: '-s',

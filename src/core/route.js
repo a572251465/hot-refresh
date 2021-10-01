@@ -119,8 +119,8 @@ const pageNextHandle = async (req, res, dir) => {
     const { log } = singleCase.preset
     if (log) {
       console.log(e)
+      console.log(colors.yellow(`${pathname} is not found`))
     }
-    console.log(colors.yellow(`${pathname} is not found`))
     res.end('not found')
   }
 }

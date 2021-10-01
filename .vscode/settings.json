@@ -11,5 +11,5 @@
   "prettier.trailingComma": "none",
   "prettier.jsxBracketSameLine": true,
   "terminal.integrated.cursorStyle": "underline",
-  "editor.cursorStyle": "underline",
+  "editor.cursorStyle": "underline-thin",
 }
