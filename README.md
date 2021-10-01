@@ -2,7 +2,7 @@
 
 > Static server  && Hot update from time to time 
 
-> It is not allowed to open two services in one directory, because this may involve webstock communication 
+> It is not allowed to open two services in one directory, because this may involve websocket communication 
 
 >If the page does not refresh from time to time, press the center key on the terminal 
 
