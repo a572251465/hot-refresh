@@ -67,6 +67,15 @@
   $ hot-refresh -c
   // 是否开启静态缓存模式
 ```
+## install
+```shell
+  npm install hot-refresh -g
+  yarn add hot-refresh -g
+```
+## use -- 推荐使用
+```txt
+  npx hot-refresh -p 8080
+```
 ## for example
 ```shell
 $ hot-refresh -p 9000
