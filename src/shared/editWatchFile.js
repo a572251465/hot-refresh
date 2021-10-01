@@ -15,6 +15,8 @@ const editWatchFile = (key, value) => {
   let dispatchFiles = []
   const unlinkFiles = []
   const preValue = singleCase.watchFile[key]
+    ? Object.assign([], singleCase.watchFile[key])
+    : singleCase.watchFile[key]
 
   // 判断缓存文件是否存在
   if (!Reflect.has(singleCase.watchFile, key)) {

@@ -16,12 +16,12 @@ const watchFilesExec = (watchFiles = [], unlinkFiles = []) => {
     const { watchInstance } = singleCase
     const unDelFiles = []
     unlinkFiles.forEach((filename) => {
-      watchInstance.forEach(async (item, key) => {
+      watchInstance.forEach((item, key) => {
         const { files, instance } = item
         if (files.includes(filename)) {
-          await instance.unwatch(filename)
           unDelFiles.push(filename)
-          const localIndex = files.findIndex(filename)
+          instance.unwatch(filename)
+          const localIndex = files.findIndex((item1) => item1 === filename)
           watchInstance[key].files.splice(localIndex, 1)
           if (watchInstance[key].files.length === 0) {
             watchInstance.splice(key, 1)
@@ -34,7 +34,7 @@ const watchFilesExec = (watchFiles = [], unlinkFiles = []) => {
     if (unDelFiles.length > 0) {
       debug(
         unDelFiles.map((filename) => `file<${filename}> be watch unmount`),
-        'add'
+        'delete'
       )
     }
   }
