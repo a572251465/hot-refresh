@@ -45,8 +45,9 @@ const debug = (content, type = 'refresh') => {
     console.log(colors.yellow(printTime))
     printInfo.forEach((info) => console.log(info))
   } else {
-    logWrite(printTime)
-    printInfoNoColors.forEach((info) => logWrite(info))
+    const { logName } = singleCase
+    logWrite(logName, printTime)
+    printInfoNoColors.forEach((info) => logWrite(logName, info))
   }
 
   return true

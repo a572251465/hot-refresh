@@ -1,23 +1,15 @@
 const fs = require('fs')
-const os = require('os')
-const { singleCase } = require('./singleCase')
 
-// 获取系统类别
-const type = os.type().toLowerCase()
-const suffix = type.includes('window')
-  ? '\r\n'
-  : type.includes('linux')
-  ? '\n'
-  : '\r'
+const { suffix } = require('./utils')
 
 /**
  * @author lihh
  * @description 对log进行文件写入
- * @param {*} content
+ * @param {*} url 写入的路径
+ * @param {*} content 写入的内容
  */
-const logWrite = (content) => {
-  const { logName } = singleCase
-  fs.appendFileSync(logName, `${content}${suffix}`)
+const logWrite = (url, content) => {
+  fs.appendFileSync(url, `${content}${suffix}`)
 }
 
 module.exports = logWrite

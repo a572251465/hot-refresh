@@ -1,7 +1,35 @@
 const fs = require('fs')
 const path = require('path')
 const fsUtil = require('./fs')
+const { getCurrentDate } = require('./utils')
 const { singleCase } = require('./singleCase')
+const { suffix } = require('./utils')
+
+/**
+ * @author lihh
+ * @description 清除缓存文件目录
+ */
+const clearDirList = () => {
+  const { dirList } = singleCase
+  const _ = getCurrentDate()
+  let { execPath } = process
+  execPath = path.dirname(execPath)
+  const newPath = path.join(execPath, _)
+
+  // 判断目录是否存在
+  if (!fsUtil.isDirExists(newPath)) {
+    return false
+  }
+
+  // 读取文件内容
+  const fileDir = path.join(newPath, 'hot-refresh.txt')
+  let content = fs.readFileSync(fileDir, 'utf-8')
+  dirList.forEach((item) => {
+    content = content.replace(`${item}${suffix}`, '')
+  })
+  fs.writeFileSync(fileDir, content)
+  return true
+}
 
 /**
  * @author lihh
@@ -74,6 +102,7 @@ const exitClearCache = () => {
   const { statics } = singleCase.preset
   if (statics) return false
 
+  clearDirList()
   clearWriteLog()
   clearWatcher()
   clearHtmlSocketInfo()

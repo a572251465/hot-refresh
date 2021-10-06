@@ -4,7 +4,8 @@ const singleCase = {
   allSocketNames: [],
   watchInstance: [],
   server: null,
-  logName: ''
+  logName: '',
+  dirList: []
 }
 
 const setPresetOptions = (options) => {
