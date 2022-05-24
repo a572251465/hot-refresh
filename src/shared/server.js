@@ -7,7 +7,6 @@ const processWatch = require('./processWatch')
 const { setPresetOptions, singleCase } = require('./singleCase')
 const generatorClientSocket = require('./generatorClientSocket')
 const ServerSocket = require('./serverSocket')
-const localCached = require('./localCached')
 
 class Server {
   constructor(options) {
@@ -23,13 +22,6 @@ class Server {
     const route = routeController()
     const server = http.createServer((req, res) => route(req, res))
     server.listen(this.port, () => {
-      // 建立本地文件缓存
-      const status = localCached(this.dir)
-      if (!status) {
-        console.log(colors.red('A service is already starting'))
-        process.exit(1)
-      }
-
       console.log(
         colors.green(
           `hot-refresh 开源不易，请拿起你们的小手，点击star吧 <https://github.com/a572251465/hot-refresh>`
